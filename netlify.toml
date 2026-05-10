@@ -1,0 +1,14 @@
+# Netlify build config.
+# Netlify auto-detects Next.js and runs the @netlify/plugin-nextjs runtime,
+# so all we need to declare is where the app lives, how to build it, and
+# the Node version. Project-specific secrets (NEXT_PUBLIC_SUPABASE_URL,
+# NEXT_PUBLIC_SUPABASE_ANON_KEY) are set in Site Settings → Environment
+# variables, NOT here — never commit secrets to git.
+
+[build]
+  base = "taskflow_frontend"
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
