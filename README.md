@@ -106,6 +106,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+> Want the full picture of what gets created in your Supabase project, the manual CLI commands behind `npm run setup`, or troubleshooting recipes? See [`docs/SETUP.md`](docs/SETUP.md).
+
 ---
 
 ## Notes
