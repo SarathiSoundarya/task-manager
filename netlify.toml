@@ -12,3 +12,10 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Explicitly declare the Next.js runtime plugin. Netlify normally auto-installs
+# this when it detects Next.js, but auto-detection can miss when the app lives
+# in a subdirectory — without this plugin, Netlify serves `.next/` as static
+# files and every route 404s.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
