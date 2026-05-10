@@ -24,3 +24,7 @@ dev-server.log
 
 # Misc
 *.zip
+
+# Supabase CLI working dirs (machine-local state, not source)
+**/supabase/.temp/
+**/supabase/.branches/
