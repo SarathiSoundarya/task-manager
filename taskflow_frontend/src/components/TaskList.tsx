@@ -6,6 +6,19 @@ import { User } from '@supabase/supabase-js';
 import AddTask from './AddTask';
 import AISubtaskManager from './AISubtaskManager';
 import SubtaskList from './SubtaskList';
+import Dropdown, { DropdownOption } from './Dropdown';
+
+const PRIORITY_OPTIONS: DropdownOption<'low' | 'medium' | 'high'>[] = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+];
+
+const STATUS_OPTIONS: DropdownOption<'pending' | 'in-progress' | 'done'>[] = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'in-progress', label: 'In Progress' },
+  { value: 'done', label: 'Done' },
+];
 
 interface TaskListProps {
   user: User;
@@ -63,35 +76,51 @@ const TaskList = ({ user }: TaskListProps) => {
 
   const toggleTask = async (task: Task) => {
     const newStatus = task.status === 'done' ? 'pending' : 'done';
+    // Optimistic: flip UI now, then sync DB.
+    setTasks(prev => prev.map(t => t.id === task.id ? { ...t, status: newStatus } : t));
     const { error } = await supabase
       .from('tasks')
       .update({ status: newStatus })
       .eq('id', task.id);
-
-    if (!error) {
-      setTasks(tasks.map(t => t.id === task.id ? { ...t, status: newStatus } : t));
+    if (error) {
+      console.error('toggleTask failed:', error);
+      setTasks(prev => prev.map(t => t.id === task.id ? { ...t, status: task.status } : t));
     }
   };
 
   const deleteTask = async (id: string) => {
+    const removed = tasks.find(t => t.id === id);
+    setTasks(prev => prev.filter(t => t.id !== id));
     const { error } = await supabase
       .from('tasks')
       .update({ is_deleted: true })
       .eq('id', id);
-
-    if (!error) {
-      setTasks(tasks.filter(t => t.id !== id));
+    if (error && removed) {
+      console.error('deleteTask failed:', error);
+      setTasks(prev => [removed, ...prev]);
     }
   };
 
-  const updateTaskField = async (id: string, field: string, value: string) => {
+  const updateTaskField = async (
+    id: string,
+    field: 'priority' | 'status',
+    value: string,
+  ) => {
+    // Capture the previous value so we can revert if the DB rejects.
+    const oldValue = tasks.find(t => t.id === id)?.[field];
+
+    // Optimistic update — controlled <select> requires this; otherwise React
+    // reverts the user's selection because state hasn't changed yet.
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, [field]: value } : t));
+
     const { error } = await supabase
       .from('tasks')
       .update({ [field]: value })
       .eq('id', id);
 
-    if (!error) {
-      setTasks(tasks.map(t => t.id === id ? { ...t, [field]: value } : t));
+    if (error) {
+      console.error(`updateTaskField(${field}) failed:`, error);
+      setTasks(prev => prev.map(t => t.id === id ? { ...t, [field]: oldValue ?? t[field] } : t));
     }
   };
 
@@ -176,7 +205,7 @@ const TaskList = ({ user }: TaskListProps) => {
           <div className="space-y-4">
             {filteredTasks.length > 0 ? (
               filteredTasks.map((task) => (
-                <div key={task.id} className="group bg-gray-50/50 p-4 rounded-2xl border border-transparent hover:border-gray-100 hover:bg-white hover:shadow-sm transition-all overflow-hidden">
+                <div key={task.id} className="group bg-gray-50/50 p-4 rounded-2xl border border-transparent hover:border-gray-100 hover:bg-white hover:shadow-sm transition-all">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="flex items-center gap-4 flex-1">
                       <input 
@@ -198,25 +227,21 @@ const TaskList = ({ user }: TaskListProps) => {
                     </div>
 
                     <div className="flex items-center gap-3 sm:ml-auto">
-                      <select
+                      <Dropdown
                         value={task.priority}
-                        onChange={(e) => updateTaskField(task.id, 'priority', e.target.value)}
-                        className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md border transition-colors cursor-pointer outline-none ${getPriorityColor(task.priority)}`}
-                      >
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                      </select>
+                        options={PRIORITY_OPTIONS}
+                        triggerColor={getPriorityColor(task.priority)}
+                        ariaLabel="Task priority"
+                        onChange={(v) => updateTaskField(task.id, 'priority', v)}
+                      />
 
-                      <select
+                      <Dropdown
                         value={task.status}
-                        onChange={(e) => updateTaskField(task.id, 'status', e.target.value)}
-                        className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md border transition-colors cursor-pointer outline-none ${getStatusColor(task.status)}`}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="done">Done</option>
-                      </select>
+                        options={STATUS_OPTIONS}
+                        triggerColor={getStatusColor(task.status)}
+                        ariaLabel="Task status"
+                        onChange={(v) => updateTaskField(task.id, 'status', v)}
+                      />
 
                       <button 
                         onClick={() => setAiManagerOpen(task.id)}
