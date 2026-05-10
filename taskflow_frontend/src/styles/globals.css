@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #4285f4;
+  --primary-hover: #0035b8;
+  --surface: #ffffff;
+  --surface-variant: #f3f4f9;
+  --on-surface: #1a1c1e;
+  --on-surface-variant: #44474e;
+  --outline: #74777f;
+  --outline-variant: #e8eaed;
+}
+
+html {
+  font-size: 15px;
+}
+
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+
+@layer components {
+  .btn-primary {
+    @apply bg-[var(--primary)] text-white font-bold py-4 px-6 rounded-2xl w-full transition-all hover:bg-[var(--primary-hover)] active:scale-[0.98] shadow-lg shadow-blue-500/20;
+  }
+  
+  .card-stats {
+    @apply bg-surface-variant p-8 rounded-3xl flex flex-col items-center justify-center text-center;
+  }
+
+  .checkbox-large {
+    width: 24px;
+    height: 24px;
+    appearance: none;
+    border: 2px solid var(--outline-variant);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  .checkbox-large:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+  .checkbox-large:checked::after {
+    content: 'check';
+    font-family: 'Material Symbols Outlined';
+    font-size: 18px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes slide-up {
+  from { transform: translate(-50%, 100%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
