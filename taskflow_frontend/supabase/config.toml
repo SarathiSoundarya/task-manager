@@ -1,0 +1,14 @@
+# Supabase project config.
+# Per-function flags live under [functions.<name>] blocks.
+
+# generate-subtasks calls the paid Groq API, so we keep JWT verification ON
+# to ensure only authenticated users of this app can invoke it. supabase-js
+# automatically sends the user's session.access_token (a real JWT) as the
+# Authorization header for logged-in users, which the gateway accepts.
+#
+# Note: with the new publishable key format (sb_publishable_*), only logged-in
+# callers will pass the gateway — anonymous calls fall back to the publishable
+# key, which is not a JWT and will be rejected with 401. That is the desired
+# behavior for a billable endpoint.
+[functions.generate-subtasks]
+verify_jwt = true
