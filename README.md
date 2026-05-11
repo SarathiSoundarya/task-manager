@@ -8,25 +8,25 @@ A calm, focused task manager that breaks busy work into bite-sized pieces — so
 
 ## Features
 
+### Auth
+Email + password sign-up and sign-in via Supabase Auth. Email-confirmation links are off by default in this project; flip **Confirm email** back on under *Authentication → Sign In / Providers → Email* in your Supabase dashboard whenever you want it enforced.
+
+![Sign in](docs/screenshots/signin.jpg)
+
+### Tasks, subtasks, drag to reorder
+Add tasks from the always-visible composer at the bottom of the page — set priority and status inline before you submit. Expand any task to manage its subtasks, drag the handles to reorder, and check things off. A completed counter (e.g. `0/3`) updates live next to each task title.
+
+![Dashboard](docs/screenshots/dashboard.jpg)
+
 ### AI-generated subtasks
 Turn one big task into a clean, actionable checklist with one click. Powered by Groq + Llama 3.3 70B running inside a Supabase Edge Function. Refine with natural-language feedback, then **Accept All** or pick only the suggestions you want with **Accept Selected**.
 
 ![AI suggestions](docs/screenshots/ai-suggestions.jpg)
 
-### Tasks, subtasks, drag to reorder
-Add tasks, expand them inline to manage subtasks, drag the handles to reorder, and check things off. A completed counter (e.g. `0/3`) updates live next to each task title.
-
-![Dashboard](docs/screenshots/dashboard.jpg)
-
 ### Priorities, statuses, search & filter
 Each task has a priority (low / medium / high) and a status (pending / in-progress / done). Filter the list by either, or search by title.
 
 ![Priority filter applied](docs/screenshots/filtering.jpg)
-
-### Auth
-Email + password sign-up and sign-in via Supabase Auth.
-
-![Sign in](docs/screenshots/signin.jpg)
 
 ---
 
