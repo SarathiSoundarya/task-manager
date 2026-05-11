@@ -61,9 +61,9 @@ export default function HomePage() {
       <header className="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center w-full sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <div className="text-primary flex items-center justify-center border-2 border-primary rounded-full p-0.5">
-            <span className="material-symbols-outlined text-xl font-black">check</span>
+            <span className="material-symbols-outlined text-xl font-black">strikethrough_s</span>
           </div>
-          <h1 className="text-xl font-bold text-gray-900 tracking-tight">TaskFlow</h1>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight">Strike</h1>
         </div>
         <div className="flex items-center gap-6">
           <span className="text-sm font-medium text-gray-500 hidden sm:inline">Welcome back, {user.email?.split('@')[0]}</span>

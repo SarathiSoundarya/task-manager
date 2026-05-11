@@ -31,19 +31,13 @@ export default function Landing() {
       </div>
 
       {/* Top nav */}
-      <header className="relative z-10 px-6 sm:px-10 py-5 flex justify-between items-center">
+      <header className="relative z-10 px-6 sm:px-10 py-5 flex items-center">
         <div className="flex items-center gap-2">
           <div className="text-primary flex items-center justify-center border-2 border-primary rounded-full p-0.5">
-            <span className="material-symbols-outlined text-xl font-black">check</span>
+            <span className="material-symbols-outlined text-xl font-black">strikethrough_s</span>
           </div>
-          <span className="text-xl font-bold text-gray-900 tracking-tight">TaskFlow</span>
+          <span className="text-xl font-bold text-gray-900 tracking-tight">Strike</span>
         </div>
-        <Link
-          href="/signin"
-          className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors"
-        >
-          Log In
-        </Link>
       </header>
 
       {/* Hero */}

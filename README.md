@@ -1,4 +1,4 @@
-# TaskFlow
+# Strike
 
 A calm, focused task manager that breaks busy work into bite-sized pieces — so you can actually ship the day.
 
@@ -14,17 +14,14 @@ Turn one big task into a clean, actionable checklist with one click. Powered by 
 ![AI suggestions](docs/screenshots/ai-suggestions.jpg)
 
 ### Tasks, subtasks, drag to reorder
-Add tasks, expand them inline to manage subtasks, drag the handles to reorder, and check things off. Completed counts (`2/4`) update live next to each task title.
+Add tasks, expand them inline to manage subtasks, drag the handles to reorder, and check things off. A completed counter (e.g. `0/3`) updates live next to each task title.
 
 ![Dashboard](docs/screenshots/dashboard.jpg)
 
 ### Priorities, statuses, search & filter
 Each task has a priority (low / medium / high) and a status (pending / in-progress / done). Filter the list by either, or search by title.
 
-### Settings
-Per-user timezone (used for deadline display).
-
-![Settings](docs/screenshots/settings.jpg)
+![Priority filter applied](docs/screenshots/filtering.jpg)
 
 ### Auth
 Email + password sign-up and sign-in via Supabase Auth.

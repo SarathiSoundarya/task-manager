@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 
 export const metadata = {
-  title: 'TaskFlow',
+  title: 'Strike',
   description: 'Minimal task dashboard',
 };
 

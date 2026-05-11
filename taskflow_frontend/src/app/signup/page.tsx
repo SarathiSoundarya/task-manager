@@ -53,10 +53,10 @@ export default function SignUpPage() {
       <div className="bg-white w-full max-w-md rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-10 space-y-8">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center border-2 border-primary rounded-full p-1 mb-4">
-            <span className="material-symbols-outlined text-primary text-2xl font-black">check</span>
+            <span className="material-symbols-outlined text-primary text-2xl font-black">strikethrough_s</span>
           </div>
           <h1 className="text-3xl font-black text-gray-900">Create Account</h1>
-          <p className="text-gray-500 font-medium">Join TaskFlow and stay organized.</p>
+          <p className="text-gray-500 font-medium">Join Strike and stay organized.</p>
         </div>
 
         <form onSubmit={handleSignUp} className="space-y-6">
